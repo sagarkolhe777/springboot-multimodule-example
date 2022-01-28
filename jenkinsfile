@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     environment {
-        BRANCH_NAME = 'master'
+        BRANCH_NAME = 'develop'
 	// This can be nexus3 or nexus2
         NEXUS_VERSION = "nexus3"
         // This can be http or https
@@ -19,14 +19,14 @@ pipeline {
         stage('Checkout') {
             steps {
                 checkout([$class: 'GitSCM', branches: [[name: "${BRANCH_NAME}" ]],
-                         userRemoteConfigs: [[credentialsId: 'git-hub-credentials', url: 'https://github.com/sagarkolhe777/sample-maven-app.git']]])
-                echo "Checkout Done"
+                         userRemoteConfigs: [[credentialsId: 'git-hub-credentials', url: 'https://github.com/sagarkolhe777/springboot-multimodule-example.git']]])
+                echo "Checkout Done ${BRANCH_NAME}"
             }
         }    
         stage('Compile') {
             steps {
                bat 'mvn clean compile'
-               echo 'Comile Done'
+               echo "Comile Done ${BRANCH_NAME}"
             }
         }
        // stage("SonarQube Analysis") {
@@ -47,13 +47,13 @@ pipeline {
         stage('Test') {
             steps {
                bat 'mvn test'
-               echo 'Test Done'
+               echo "Test Done ${BRANCH_NAME}"
             }
         }
         stage('Build') {
             steps {
                bat 'mvn clean install'
-               echo 'Build Done'
+               echo "Build Done ${BRANCH_NAME}"
             }
         }
 	stage("publish to nexus") {
