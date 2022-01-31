@@ -154,22 +154,6 @@
             </properties>
             <build>
                 <finalName>${project.artifactId}-DEV-${project.version}</finalName>
-                <plugins>
-                    <plugin>
-                        <!--Skip deploy dev profile build artifacts-->
-                        <artifactId>maven-deploy-plugin</artifactId>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-                    <plugin>
-                        <!--Skip deploy dev profile build artifacts-->
-                        <artifactId>maven-install-plugin</artifactId>
-                        <configuration>
-                            <skip>true</skip>
-                        </configuration>
-                    </plugin>
-                </plugins>
             </build>
         </profile> 
    </profiles>
