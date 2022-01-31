@@ -173,7 +173,7 @@
     </distributionManagement>
 	
    <profiles>	
-   <profile>
+      <profile>
             <id>dev</id>
             <activation>
                 <activeByDefault>true</activeByDefault>
@@ -204,6 +204,6 @@
                 </plugins>
             </build>
         </profile> 
-   <profiles>
+   </profiles>
     
 </project>
