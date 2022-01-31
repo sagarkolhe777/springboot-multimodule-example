@@ -23,6 +23,51 @@
 		<mail.version>1.0-SNAPSHOT</mail.version>
 		<security.version>1.0-SNAPSHOT</security.version>
 	</properties>
+	
+	<build>
+		<plugins>
+		    <plugin>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+
+			<executions>
+			    <execution>
+				<id>build-info</id>
+				<goals>
+				    <goal>build-info</goal>
+				</goals>
+				<configuration>
+
+				    <additionalProperties>
+					<java.version>${java.version}</java.version>
+					<comapnyName.build_number>100</comapnyName.build_number>
+					<comapnyName.ci_pipeline>100</comapnyName.ci_pipeline>
+					<comapnyName.commit_id>1987</comapnyName.commit_id>
+					<comapnyName.commit_id_short>0611</comapnyName.commit_id_short>
+					<comapnyName.project_id>comapnyName-Connect</comapnyName.project_id>
+					<comapnyName.project_branch>develop</comapnyName.project_branch>
+					<comapnyName.project_name>comapnyName-connect</comapnyName.project_name>
+					<comapnyName.project_namespace>Connect</comapnyName.project_namespace>
+				    </additionalProperties>
+				</configuration>
+			    </execution>
+			</executions>
+
+			<configuration>
+			    <executable>true</executable>
+			    <layout>ZIP</layout>
+			    <classifier>${project.build.finalName}</classifier>
+			</configuration>
+		    </plugin>
+
+		    <plugin>
+			<artifactId>maven-deploy-plugin</artifactId>
+			<configuration>
+			    <classifier>${project.build.finalName}</classifier>
+			</configuration>
+		    </plugin>
+		</plugins>
+    </build>
 
 	<dependencyManagement>	 
 		<dependencies>
@@ -89,7 +134,7 @@
         </repository>
 
         <repository>
-            <id>Crif-snapshots</id>
+            <id>comapnyName-snapshots</id>
             <url>http://localhost:8081/#browse/browse:maven-snapshots/</url>
             <releases>
                 <enabled>false</enabled>
@@ -101,7 +146,7 @@
         </repository>
 
         <repository>
-            <id>Crif-releases</id>
+            <id>comapnyName-releases</id>
             <url>http://localhost:8081/#browse/browse:maven-releases/</url>
             <releases>
                 <enabled>true</enabled>
@@ -116,15 +161,47 @@
 
     <distributionManagement>
         <repository>
-            <id>crif_repo</id>
-            <name>CRIF Internal Releases</name>
+            <id>comapnyName_repo</id>
+            <name>comapnyName Internal Releases</name>
             <url>http://localhost:8081/#browse/browse:maven-releases/</url>
         </repository>
         <snapshotRepository>
-            <id>crif_repo</id>
-            <name>CRIF Internal Releases</name>
+            <id>comapnyName_repo</id>
+            <name>comapnyName Internal Releases</name>
             <url>http://localhost:8081/#browse/browse:maven-snapshots/</url>
         </snapshotRepository>
     </distributionManagement>
+	
+   <profile>
+            <id>dev</id>
+            <activation>
+                <activeByDefault>true</activeByDefault>
+            </activation>
+            <properties>
+                <mainConfigurationDir>${project.basedir}/src/main/resources_dev
+                </mainConfigurationDir>
+                <testConfigurationDir>${project.basedir}/src/test/resources_dev
+                </testConfigurationDir>
+            </properties>
+            <build>
+                <finalName>${project.artifactId}-DEV-${project.version}</finalName>
+                <plugins>
+                    <plugin>
+                        <!--Skip deploy dev profile build artifacts-->
+                        <artifactId>maven-deploy-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                    <plugin>
+                        <!--Skip deploy dev profile build artifacts-->
+                        <artifactId>maven-install-plugin</artifactId>
+                        <configuration>
+                            <skip>true</skip>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile> 	
     
 </project>
