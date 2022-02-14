@@ -29,27 +29,7 @@ pipeline {
                echo "Comile Done ${BRANCH_NAME}"
             }
         }
-       // stage("SonarQube Analysis") {
-         //   steps {
-           //   withSonarQubeEnv('SonarQube') {
-             //   bat 'mvn clean package sonar:sonar'
-              //  echo 'SonarQube Analysis Done'  
-             // }
-           // }
-        //}
-        //stage("Quality Gate") {
-          //  steps {
-            //  timeout(time: 1, unit: 'HOURS') {
-            //    waitForQualityGate abortPipeline: true
-            //  }
-           // }
-        //}
-        //stage('Test') {
-          //  steps {
-            //   bat 'mvn test'
-            //   echo "Test Done ${BRANCH_NAME}"
-           // }
-       // }
+       
         stage('Build') {
             steps {
                bat 'mvn clean install -DskipTests=true'
@@ -62,7 +42,7 @@ pipeline {
 	stage("publish to nexus") {
             steps {
 	        script {
-		
+		       echo "Publish Done ${BRANCH_NAME}"
                        pom = readMavenPom file: "web/pom.xml";
 		       corePom = readMavenPom file: "core/pom.xml";
                    
@@ -84,44 +64,23 @@ pipeline {
                                 [artifactId: corePom.artifactId, classifier: '', file: "core/target/core-DEV-1.0-SNAPSHOT.jar", type: pom.packaging]
                             ]
                         );
-
-                   
                 }
-				
-	    
-	       //withMaven(mavenSettingsConfig: 'a9ed309e-ba12-43cf-be0b-58bc4665974a'){
-                 //bat 'mvn clean deploy'
-		 //echo "Publish Done ${BRANCH_NAME}"
-               //}
-	       
-	       // configFileProvider(
-                // [configFile(fileId: 'a9ed309e-ba12-43cf-be0b-58bc4665974a', variable: 'MAVEN_SETTINGS')]) {
-                //   bat 'mvn -gs $MAVEN_SETTINGS clean package'
-		//   echo "Publish Done ${BRANCH_NAME}"
-               //}
-	       //configFileProvider([configFile(fileId: 'a9ed309e-ba12-43cf-be0b-58bc4665974a', variable: 'MAVEN_SETTINGS_XML')]) { 
-	       //bat 'mvn deploy '
-               //echo "Publish Done ${BRANCH_NAME}"
-	       //}
 	  }
 	}
     }
     	
     post { 
-		always { 
-			echo 'One way or another, I have finished'
-		}
-		aborted{
-			sleep(1)
-			script{currentBuild.result='ABORTED'}
-		}
-		failure{
-			sleep(1)
-			script{currentBuild.result='FAILURE'}
-		}
-		success{
-			sleep(1)
-			script{currentBuild.result='SUCCESS'}
-		}
-	}	
+	aborted{
+		sleep(1)
+		script{currentBuild.result='ABORTED'}
+	}
+	failure{
+		sleep(1)
+		script{currentBuild.result='FAILURE'}
+	}
+	success{
+		sleep(1)
+		script{currentBuild.result='SUCCESS'}
+	}
+    }	
 }
