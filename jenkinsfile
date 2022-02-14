@@ -66,7 +66,7 @@ pipeline {
 			
 			nexusArtifactUploader artifacts: [
 			   [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'], 
-			   [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
+			   [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
 			], 
 			credentialsId: NEXUS_CREDENTIAL_ID, 
 			groupId: 'sp.sd', 
