@@ -67,7 +67,7 @@ pipeline {
 		      // corePom = readMavenPom file: "core/pom.xml";
                    
                    
-                        echo "*** File:  group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                        echo "*** File:  artifacts: ${pom.artifactId}, group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
                   
 			
 			nexusArtifactUploader(
@@ -79,7 +79,7 @@ pipeline {
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
-                                [artifactId: pom.artifactId, classifier: '', file: web/target/web-DEV-1.0-SNAPSHOT.jar, type: pom.packaging]
+                                [artifactId: pom.artifactId, classifier: '', file: "web/target/web-DEV-1.0-SNAPSHOT.jar", type: pom.packaging]
                                // [artifactId: corePom.artifactId, classifier: '', file: "core/target/core-DEV-1.0-SNAPSHOT.jar", type: pom.packaging]
                             ]
                         );
