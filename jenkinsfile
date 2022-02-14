@@ -63,7 +63,9 @@ pipeline {
             steps {
 	        script {
 		   
-			pom = readMavenPom file: 'web/pom.xml'
+			pom = readMavenPom file: 'web/pom.xml';
+			echo "version ${pom.version}";
+			echo "groupId ${pom.groupId}";
 			
 			nexusArtifactUploader artifacts: [
 			   [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'] 
