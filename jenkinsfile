@@ -119,7 +119,7 @@ pipeline {
 	       //bat 'mvn deploy '
                //echo "Publish Done ${BRANCH_NAME}"
 	       //}
-	  }
+	  //}
 	}
     }
     	
