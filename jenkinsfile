@@ -44,19 +44,19 @@ pipeline {
 	stage("publish to nexus") {
             steps {
 	        script {
-                       webPom = readMavenPom file: "web/pom.xml";
-		       corePom = readMavenPom file: "core/pom.xml";
+                       web = readMavenPom file: "web/pom.xml";
+		       core = readMavenPom file: "core/pom.xml";
 		       nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
                             protocol: NEXUS_PROTOCOL,
                             nexusUrl: NEXUS_URL,
                             groupId: 'example.api',
-                            version: ${BRANCH_VERSION},
+                            version: BRANCH_VERSION,
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
-                                [artifactId: webPom.artifactId, classifier: '', file: "web/target/web-DEV-${BRANCH_VERSION}.jar", type: webPom.packaging],
-                                [artifactId: corePom.artifactId, classifier: '', file: "core/target/core-DEV-${BRANCH_VERSION}.jar", type: pom.packaging]
+                                [artifactId: web.artifactId, classifier: '', file: "web/target/web-DEV-BRANCH_VERSION.jar", type: web.packaging],
+                                [artifactId: core.artifactId, classifier: '', file: "core/target/core-DEV-BRANCH_VERSION.jar", type: core.packaging]
                             ]
                         );
                 }
