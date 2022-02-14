@@ -65,7 +65,7 @@ pipeline {
 	stage ('Deploy') {
            steps {
                sshagent(credentials : ['GRAB-INT-SERVER-SSH']) {
-	            withEnv(['GIT_SSH_COMMAND="C:\Windows\System32\OpenSSH\ssh-agent.exe"']) {
+	            withEnv(['GIT_SSH_COMMAND="C:/Windows/System32/OpenSSH/ssh-agent.exe"']) {
                     bat 'ssh -o StrictHostKeyChecking=no alice@10.248.115.186 uptime'
                     bat 'ssh sudo mkdir ./jenkinFolder'
                     //sh 'scp ./source/filename user@hostname.com:/remotehost/target'
