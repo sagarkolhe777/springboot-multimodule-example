@@ -63,18 +63,19 @@ pipeline {
             steps {
 	        script {
 		   
-			
+			pom = readMavenPom file: 'web/pom.xml'
+                        pom.version
 			nexusArtifactUploader artifacts: [
-			   [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'], 
+			   [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'] 
 			   [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'core/target/core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
 			], 
 			credentialsId: NEXUS_CREDENTIAL_ID, 
-			groupId: 'sp.sd', 
+			groupId: pom.groupId, 
 			nexusUrl: NEXUS_URL, 
 			nexusVersion: NEXUS_VERSION, 
 			protocol: NEXUS_PROTOCOL, 
 			repository: NEXUS_REPOSITORY, 
-			version: '2.4'
+			version: pom.version
 
                    
                 }
