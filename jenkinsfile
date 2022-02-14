@@ -39,8 +39,6 @@ pipeline {
             }
         }
 	
-	
-	
 	stage("publish to nexus") {
             steps {
 	        script {
@@ -50,7 +48,7 @@ pipeline {
                             nexusVersion: NEXUS_VERSION,
                             protocol: NEXUS_PROTOCOL,
                             nexusUrl: NEXUS_URL,
-                            groupId: 'example.api',
+                            groupId: core.getParent().getGroupId(),
                             version: BRANCH_VERSION,
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
