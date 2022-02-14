@@ -64,7 +64,7 @@ pipeline {
 	        script {
 		   
 			pom = readMavenPom file: 'web/pom.xml'
-                        pom.version
+			
 			nexusArtifactUploader artifacts: [
 			   [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'] 
 			   [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'core/target/core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
