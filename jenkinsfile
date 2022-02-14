@@ -61,16 +61,18 @@ pipeline {
 		echo "Publish Done ${BRANCH_NAME}"
 	  }
 	}
-    }
-    stage ('Deploy') {
-    steps {
-        sshagent(credentials : ['GRAB-INT-SERVER-SSH']) {
-            bat 'ssh -o StrictHostKeyChecking=no alice@10.248.115.186 uptime'
-            bat 'ssh sudo mkdir ./jenkinFolder'
-            //sh 'scp ./source/filename user@hostname.com:/remotehost/target'
+	
+	stage ('Deploy') {
+           steps {
+               sshagent(credentials : ['GRAB-INT-SERVER-SSH']) {
+                    bat 'ssh -o StrictHostKeyChecking=no alice@10.248.115.186 uptime'
+                    bat 'ssh sudo mkdir ./jenkinFolder'
+                    //sh 'scp ./source/filename user@hostname.com:/remotehost/target'
+                }
+           }
         }
-      }
     }
+    
     	
     post { 
 	aborted{
