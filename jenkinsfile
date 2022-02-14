@@ -64,35 +64,23 @@ pipeline {
 	        script {
 		
                        pom = readMavenPom file: "web/pom.xml";
-		       corePom = readMavenPom file: "core/pom.xml";
+		      // corePom = readMavenPom file: "core/pom.xml";
                    
                    
                         echo "*** File:  group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
                   
-		   	
-			//nexusArtifactUploader artifacts: [
-			  // [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'] 
-			  // [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'core/target/core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
-			//], 
-			//credentialsId: NEXUS_CREDENTIAL_ID, 
-			//groupId: pom.groupId, 
-			//nexusUrl: NEXUS_URL, 
-			//nexusVersion: NEXUS_VERSION, 
-			//protocol: NEXUS_PROTOCOL, 
-			//repository: NEXUS_REPOSITORY, 
-			//version: pom.version
 			
 			nexusArtifactUploader(
                             nexusVersion: NEXUS_VERSION,
                             protocol: NEXUS_PROTOCOL,
                             nexusUrl: NEXUS_URL,
-                            groupId: pom.groupId,
+                            groupId: 'example.api',
                             version: pom.version,
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
-                                [artifactId: pom.artifactId, classifier: '', file: web/target/web-DEV-1.0-SNAPSHOT.jar, type: pom.packaging],
-                                [artifactId: corePom.artifactId, classifier: '', file: "core/target/core-DEV-1.0-SNAPSHOT.jar", type: pom.packaging]
+                                [artifactId: pom.artifactId, classifier: '', file: web/target/web-DEV-1.0-SNAPSHOT.jar, type: pom.packaging]
+                               // [artifactId: corePom.artifactId, classifier: '', file: "core/target/core-DEV-1.0-SNAPSHOT.jar", type: pom.packaging]
                             ]
                         );
 
