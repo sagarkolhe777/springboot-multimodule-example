@@ -55,8 +55,8 @@ pipeline {
                             repository: NEXUS_REPOSITORY,
                             credentialsId: NEXUS_CREDENTIAL_ID,
                             artifacts: [
-                                [artifactId: web.artifactId, classifier: '', file: "web/target/web-DEV-BRANCH_VERSION.jar", type: web.packaging],
-                                [artifactId: core.artifactId, classifier: '', file: "core/target/core-DEV-BRANCH_VERSION.jar", type: core.packaging]
+                                [artifactId: web.artifactId, classifier: '', file: "web/target/web-DEV-${BRANCH_VERSION}.jar", type: web.packaging],
+                                [artifactId: core.artifactId, classifier: '', file: "core/target/core-DEV-${BRANCH_VERSION}.jar", type: core.packaging]
                             ]
                         );
                 }
