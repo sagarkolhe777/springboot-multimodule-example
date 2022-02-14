@@ -62,22 +62,24 @@ pipeline {
 	stage("publish to nexus") {
             steps {
 	        script {
-		   
-			pom = readMavenPom file: 'web/pom.xml';
-			echo "version ${pom.version}";
-			echo "groupId ${pom.groupId}";
-			
-			nexusArtifactUploader artifacts: [
-			   [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'] 
-			   [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'core/target/core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
-			], 
-			credentialsId: NEXUS_CREDENTIAL_ID, 
-			groupId: pom.groupId, 
-			nexusUrl: NEXUS_URL, 
-			nexusVersion: NEXUS_VERSION, 
-			protocol: NEXUS_PROTOCOL, 
-			repository: NEXUS_REPOSITORY, 
-			version: pom.version
+		
+                    pom = readMavenPom file: "web/pom.xml";
+                   
+                   
+                        echo "*** File:  group: ${pom.groupId}, packaging: ${pom.packaging}, version ${pom.version}";
+                  
+		   	
+			//nexusArtifactUploader artifacts: [
+			  // [artifactId: 'web-nexus-artifact-uploader', classifier: 'debug', file: 'web/target/web-DEV-1.0-SNAPSHOT.jar', type: 'jar'] 
+			  // [artifactId: 'core-nexus-artifact-uploader', classifier: 'debug', file: 'core/target/core-DEV-1.0-SNAPSHOT.jar', type: 'jar']
+			//], 
+			//credentialsId: NEXUS_CREDENTIAL_ID, 
+			//groupId: pom.groupId, 
+			//nexusUrl: NEXUS_URL, 
+			//nexusVersion: NEXUS_VERSION, 
+			//protocol: NEXUS_PROTOCOL, 
+			//repository: NEXUS_REPOSITORY, 
+			//version: pom.version
 
                    
                 }
